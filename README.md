@@ -1,6 +1,6 @@
 # Code Examples of Functional Design: Principles, Patterns, and Practices [978-0138176396]
 
-## Clojure basic (for macOS)
+## Install Clojure (for macOS)
 
 ```shell
 # Install Clojure tool-chain
@@ -12,9 +12,31 @@ clj -X hello/run
 
 * `deps.edn` - dependency file
 
-## Basic syntax
+## Basic usage
 
 See [the official docs](https://clojure.org/guides/deps_and_cli) for more details.
+
+### REPL
+
+```shell
+clj
+
+## Example usage and outputs:
+# clj
+# Clojure 1.11.4
+# user=> (require '[clojure.test :as t])
+# nil
+# user=> (t/is (true? true) "true is true")
+# true
+# user=> (t/is (= true false) "true equals false")
+#
+# FAIL in () (NO_SOURCE_FILE:1)
+# true equals false
+# expected: (= true false)
+#   actual: (not (= true false))
+# false
+# user=> ...
+```
 
 ### Name space / using other name space libraries
 
@@ -31,4 +53,22 @@ See [the official docs](https://clojure.org/guides/deps_and_cli) for more detail
 
 (defn run [opts]
   (println "Hello world, the time is" (time-str (t/instant))))
+```
+
+### Running tests
+
+See [this blog](https://tonitalksdev.com/how-to-get-started-with-tdd-in-clojure) for absolutely begginers for Clojure.
+
+Make sure that you have installed [cognitect-labs/test-runner](https://github.com/cognitect-labs/test-runner)
+and setting up the alias (see test-runner docs for more detail).
+
+```shell
+clj -X:test
+```
+
+### Other tips
+
+```shell
+# find out available libs' versions
+clj -X:deps find-versions :lib clojure.java-time/clojure.java-time
 ```
