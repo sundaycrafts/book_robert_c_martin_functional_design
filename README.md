@@ -66,6 +66,14 @@ and setting up the alias (see test-runner docs for more detail).
 clj -X:test
 ```
 
+### Launching as a script
+
+`-M` will pass the file as a script to the `clojure.main` process
+
+```shell
+clj -M /path/to/file.clj
+```
+
 ### Other tips
 
 ```shell
