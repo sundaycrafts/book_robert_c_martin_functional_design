@@ -1,14 +1,30 @@
 (ns ch-7.bowling-game)
 
 (defn to-frames [rolls]
-    (partition 2 rolls))
+    (loop [remaining-rolls rolls
+        frames []]
+        (cond
+            (empty? remaining-rolls) ; first condition
+            frames
+
+            (= 10 (first remaining-rolls)) ; second condition
+            (recur (rest remaining-rolls)
+                (conj frames (take 3 remaining-rolls)))
+
+            (= 10 (reduce + (take 2 remaining-rolls))) ; third condition
+            (recur (drop 2 remaining-rolls)
+                (conj frames (take 3 remaining-rolls)))
+
+            :else ; catch-all condition
+            (recur (drop 2 remaining-rolls)
+                (conj frames (take 2 remaining-rolls))))))
 
 (defn add-frame [score frame]
     (+ score (reduce + frame)))
 
 (defn score [rolls] ; Vector<int>
     (reduce add-frame 0 ; score
-        (to-frames rolls) ; frames e.g. [[0, 1], [2, 3],,,]
+        (take 10 (to-frames rolls)) ; frames e.g. [[0, 1], [2, 3],,,]
         ))
 
 ;; Java implementation:
