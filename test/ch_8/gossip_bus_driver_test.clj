@@ -19,4 +19,30 @@
             new-world (sut/drive world)]
         (t/is (= (count new-world) 1))
         (t/is (= (-> new-world first :route first) :s2))))
+
+    (t/testing "drives two buses at some stops"
+        (let [d1 (sut/make-driver "d1" [:s1 :s2] #{:r1})
+            d2 (sut/make-driver "d2" [:s1 :s3 :s2] #{:r2})
+            world [d1 d2]
+            new-1 (sut/drive world)
+            new-2 (sut/drive new-1)]
+        (t/is (= 2 (count new-1)))
+        (t/is (= :s2 (-> new-1 first :route first)))
+        (t/is (= :s3 (-> new-1 second :route first)))
+        (t/is (= 2 (count new-2)))
+        (t/is (= :s1 (-> new-2 first :route first)))
+        (t/is (= :s2 (-> new-2 second :route first)))
+        ))
+
+    (t/testing "gets stops"
+        (let [drivers #{
+            {:name "d1" :route [:s1]}
+            {:name "d2" :route [:s1]}
+            {:name "d3" :route [:s2]}
+            }]
+        (t/is (= {
+            :s1 [{:name "d1" :route [:s1]} {:name "d2" :route [:s1]}]
+            :s2 [{:name "d3" :route [:s2]}]
+            } (sut/get-stops drivers)))
+        ))
     )

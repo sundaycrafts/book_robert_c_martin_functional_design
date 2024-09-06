@@ -9,6 +9,24 @@
 (defn move-drivers [world]
     (map move-driver world))
 
+(defn get-stops [world]
+    (loop [world world
+        stops {}]
+    (if (empty? world)
+        stops
+        (let [driver (first world)
+            stop (first (:route driver))
+            ;; update stop in stops by `(conj <entry having :key in stops> driver)`.
+            ;; in more varbose: update (or insert if not exists yet) stops' field that having an :key
+            ;; with `(conj existing_vactor_having_key driver)`. driver form is like {:name "~" :route [:key]}.
+            ;; eventually, it returns like { :key [{:name "~" :route [:key]}] }
+            stops (update stops stop conj driver)
+            ]
+        ;; loop with world that excluded first driver to scan one-by-one.
+        ;; stops behaves as an accumurator.
+        (recur (rest world) stops)
+        ))))
+
 (defn spread-rumors [world]
     world ; TODO: implement
     )
