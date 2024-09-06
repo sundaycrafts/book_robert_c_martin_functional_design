@@ -48,7 +48,6 @@
         (t/is (= [{:name "d1" :rumors #{:r2 :r1}} {:name "d2" :rumors #{:r2 :r1}}]
             (sut/merge-rumors [{:name "d1" :rumors #{:r1}} {:name "d2" :rumors #{:r2}}]))))
 
-    ;; use-case test from here
     (t/testing "shares gossip when drivers are at same stop"
         (let [d1 (sut/make-driver "d1" [:s1 :s2] #{:r1})
             d2 (sut/make-driver "d1" [:s1 :s2] #{:r2})
@@ -57,4 +56,17 @@
         (t/is (= 2 (count new-world)))
         (t/is (= #{:r1 :r2} (-> new-world first :rumors)))
         (t/is (= #{:r1 :r2} (-> new-world second :rumors)))))
+
+    (t/testing "passes acceptance test 1"
+        (let [world [
+            (sut/make-driver "d1" [3 1 2 3] #{1})
+            (sut/make-driver "d2" [3 2 3 1] #{2})
+            (sut/make-driver "d3" [4 2 3 4 5] #{3})]]
+        (t/is (= 6 (sut/drive-till-all-rumors-spread world)))))
+
+    (t/testing "passes acceptance test 2"
+        (let [world [
+            (sut/make-driver "d1" [2 1 2] #{1})
+            (sut/make-driver "d2" [5 2 8] #{2})]]
+        (t/is (= :never (sut/drive-till-all-rumors-spread world)))))
     )

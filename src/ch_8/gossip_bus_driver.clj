@@ -51,3 +51,13 @@
 ;; It returns a new world that after drivers has moved.
 (defn drive [world]
     (-> world move-drivers spread-rumors))
+
+(defn drive-till-all-rumors-spread [world]
+    (loop [world (drive world)
+            time 1]
+        (cond
+            (> time 480) :never
+            ;; `=` checks if every driver has the same set of rumors
+            ;; If this condition is true (i.e., all drivers have the same rumors), the function returns the current `time`.
+            (apply = (map :rumors world)) time
+            :else (recur (drive world) (inc time)))))
