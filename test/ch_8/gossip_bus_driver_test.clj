@@ -3,8 +3,6 @@
         [ch-8.gossip-bus-driver :as sut]))
 
 (t/deftest test-gossip-bus-driver
-    (t/testing "success compile"
-        (t/is (= true true)))
     (t/testing "drives one bus at one stop"
         (let [driver (sut/make-driver "d1" [:s1] #{:r1}) ; :s1 = station, :r1 = rumor
             world [driver] ; the world is represented as a vector of drivers
@@ -49,4 +47,14 @@
     (t/testing "merges rumos"
         (t/is (= [{:name "d1" :rumors #{:r2 :r1}} {:name "d2" :rumors #{:r2 :r1}}]
             (sut/merge-rumors [{:name "d1" :rumors #{:r1}} {:name "d2" :rumors #{:r2}}]))))
+
+    ;; use-case test from here
+    (t/testing "shares gossip when drivers are at same stop"
+        (let [d1 (sut/make-driver "d1" [:s1 :s2] #{:r1})
+            d2 (sut/make-driver "d1" [:s1 :s2] #{:r2})
+            world [d1 d2]
+            new-world (sut/drive world)]
+        (t/is (= 2 (count new-world)))
+        (t/is (= #{:r1 :r2} (-> new-world first :rumors)))
+        (t/is (= #{:r1 :r2} (-> new-world second :rumors)))))
     )

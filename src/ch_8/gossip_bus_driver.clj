@@ -38,8 +38,13 @@
     (map #(assoc % :rumors all-rumors) drivers)))
 
 (defn spread-rumors [world]
-    world ; TODO: implement
-    )
+    (let [stops-with-drivers (get-stops world) ; transform drivers list into stops list {:stop1 [[driver attr]] :stop2 [[driver attr]]}
+        ;; vals returns a list of all values (not keys) in the map. keys returns list of its keys.
+        ;; result: [[drivers at stop1] [drivers at stop2]]
+        drivers-by-stop (vals stops-with-drivers)
+        ]
+    (flatten (map merge-rumors drivers-by-stop)) ; flatten makes nested list to be flat
+    ))
 
 ;; Move each drivers who in the world to the next stop.
 ;; The world is represented as a vector of drivers.
