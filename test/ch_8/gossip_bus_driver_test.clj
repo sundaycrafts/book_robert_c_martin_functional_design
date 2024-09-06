@@ -45,4 +45,8 @@
             :s2 [{:name "d3" :route [:s2]}]
             } (sut/get-stops drivers)))
         ))
+
+    (t/testing "merges rumos"
+        (t/is (= [{:name "d1" :rumors #{:r2 :r1}} {:name "d2" :rumors #{:r2 :r1}}]
+            (sut/merge-rumors [{:name "d1" :rumors #{:r1}} {:name "d2" :rumors #{:r2}}]))))
     )

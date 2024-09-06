@@ -1,4 +1,5 @@
-(ns ch-8.gossip-bus-driver)
+(ns ch-8.gossip-bus-driver
+    (:require [clojure.set :as set]))
 
 (defn make-driver [names route rumors]
     (assoc {} :name name :route (cycle route) :rumors rumors))
@@ -26,6 +27,15 @@
         ;; stops behaves as an accumurator.
         (recur (rest world) stops)
         ))))
+
+(defn merge-rumors [drivers]
+    (let [rumors (map :rumors drivers) ; new vector only having :rumors' value
+        all-rumors (apply set/union rumors) ; new vector excluded duplicated keys
+        ]
+    ;; #(...) is a shorthand to define lambda instead of using `fn` keyword.
+    ;; `%` inside of lambda represends an argument. use %1, %2 for multiple arguments.
+    ;; `assoc <target map> <key> <value>` overrides a (or inserts new) key-value pair
+    (map #(assoc % :rumors all-rumors) drivers)))
 
 (defn spread-rumors [world]
     world ; TODO: implement
