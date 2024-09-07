@@ -1,4 +1,5 @@
-(ns ch-9.payroll)
+(ns ch-9.payroll
+    (:require [typed.clojure :as t]))
 
 ;; interfaces and dispatchers
 (defn get-pay-class [employee]
@@ -33,6 +34,7 @@
 (defn get-paycheck-amounts [employees]
     (map calc-pay employees))
 
+(t/ann get-ids [(t/Seqable (t/HMap {:id t/Str})) -> (t/Seqable t/Str)])
 (defn get-ids [employees]
     (map :id employees))
 
