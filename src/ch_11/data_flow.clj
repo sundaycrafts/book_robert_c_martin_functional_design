@@ -1,10 +1,44 @@
 (ns ch-11.data-flow
+    (:require [clojure.string :as string])
     (:require [clojure.string :as string]))
 
 (defmulti read-from :mode)
 
-(defn execute [starting-state lines]
-    starting-state)
+(defn noop [state]
+    (update state :cycles conj (:x state)))
+
+(defn addx [n state]
+    (let [{:keys [x cycles]} state]
+        (assoc state :x (+ x n)
+            :cycles (vec (concat cycles [x x])))))
+
+;; execution timing
+;;        addx: .n.n.n.n.n.n.n.n.n.n
+;;        noop: xxxxxxxxxxxxxxxxxxxx
+;; clock cycle: 123456789abcdefghijk
+(defn execute [state lines]
+    (if (empty? lines)
+        state
+        (let [line (first lines)
+            state (if (re-matches #"noop" line)
+                (noop state)
+                (if-let [[_ n] (re-matches #"addx (-?\d+)" line)]
+                    (addx (Integer/parseInt n) state)
+                    "TILT"))]
+            (recur state (rest lines)))))
+
+(defn render-cycles [cycles]
+    (loop [cycles cycles
+        screen ""
+        t 0]
+    (if (empty? cycles)
+        (map #(apply str %) (partition 40 40 "" screen))
+        (let [x (first cycles)
+            offset (- t x)
+            pixel? (<= -1 offset 1)
+            screen (str screen (if pixel? "#" "."))
+            t (mod (inc t) 40)]
+        (recur (rest cycles) screen t)))))
 
 (defn execute-file [mode file-name]
     (let [lines (string/split-lines (read-from mode file-name))
@@ -17,3 +51,14 @@
 
 (defmethod read-from :stub [_ contents]
     contents)
+
+(defn print-screen [lines]
+    (doseq [line lines]
+        (println line))
+    true)
+
+;; (defn -main []
+;;     (-> "input"
+;;         execute-file
+;;         render-cycles
+;;         print-screen))

@@ -4,5 +4,5 @@
 
 (t/deftest data-flow-assertion
     (t/testing "executes file"
-        (t/is (= [] (sut/execute-file {:mode :stub} "Hello world"))))
+        (t/is (= [1 1 1] (sut/execute-file {:mode :stub} "noop\nnoop\nnoop"))))
   )
