@@ -1,4 +1,4 @@
-(ns ch-5.atom)
+(ns ch-05.atom)
 
 (defn memo [f]
   (let [mem (atom {})]

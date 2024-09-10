@@ -1,6 +1,6 @@
-(ns ch-7.bowling-game-test
+(ns ch-07.bowling-game-test
     (:require [clojure.test :as t]
-        [ch-7.bowling-game :as sut]))
+        [ch-07.bowling-game :as sut]))
 
 (t/deftest test-bowling-game
     (t/testing "gutter"

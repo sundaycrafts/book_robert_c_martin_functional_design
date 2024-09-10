@@ -1,6 +1,6 @@
-(ns ch-5.atom-test
+(ns ch-05.atom-test
     (:require [clojure.test :as t]
-        [ch-5.atom :as sut]))
+        [ch-05.atom :as sut]))
 
 (t/deftest test-assertion
   (t/testing "atom example 1"

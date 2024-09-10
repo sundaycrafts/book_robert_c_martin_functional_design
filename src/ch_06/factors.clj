@@ -1,4 +1,4 @@
-(ns ch-6.factors)
+(ns ch-06.factors)
 
 (defn prime-factors-of [n]
     ;; works until 9

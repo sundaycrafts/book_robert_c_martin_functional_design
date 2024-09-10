@@ -1,4 +1,4 @@
-(ns ch-8.gossip-bus-driver
+(ns ch-08.gossip-bus-driver
     (:require [clojure.set :as set]))
 
 (defn make-driver [names route rumors]

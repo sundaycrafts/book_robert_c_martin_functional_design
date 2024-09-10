@@ -1,7 +1,7 @@
-(ns ch-9.payroll-test
+(ns ch-09.payroll-test
     (:require [clojure.test :as t]
         [clojure.instant :as instant]
-        [ch-9.payroll :as sut]))
+        [ch-09.payroll :as sut]))
 
 (t/deftest test-payroll
     (t/testing "pays one salaried employee at end of month by mail" ; fixed salary (no flex salary)

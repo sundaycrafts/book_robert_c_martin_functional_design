@@ -1,6 +1,6 @@
-(ns ch-6.factors-test
+(ns ch-06.factors-test
     (:require [clojure.test :as t]
-        [ch-6.factors :as sut]))
+        [ch-06.factors :as sut]))
 
 (t/deftest test-factors
     (t/testing "factors of 1 should be empty vector"

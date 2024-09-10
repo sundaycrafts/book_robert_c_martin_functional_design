@@ -1,4 +1,4 @@
-(ns ch-7.bowling-game)
+(ns ch-07.bowling-game)
 
 (defn to-frames [rolls]
     (loop [remaining-rolls rolls

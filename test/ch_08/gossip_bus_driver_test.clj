@@ -1,6 +1,6 @@
-(ns ch-8.gossip-bus-driver-test
+(ns ch-08.gossip-bus-driver-test
     (:require [clojure.test :as t]
-        [ch-8.gossip-bus-driver :as sut]))
+        [ch-08.gossip-bus-driver :as sut]))
 
 (t/deftest test-gossip-bus-driver
     (t/testing "drives one bus at one stop"

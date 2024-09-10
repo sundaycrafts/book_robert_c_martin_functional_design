@@ -1,4 +1,4 @@
-(ns ch-9.payroll
+(ns ch-09.payroll
     (:require [typed.clojure :as t]))
 
 ;; interfaces and dispatchers

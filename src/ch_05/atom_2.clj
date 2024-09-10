@@ -1,4 +1,4 @@
-(ns ch-5.atom-2)
+(ns ch-05.atom-2)
 
 (def counter (atom 0)) ; atomic shared value
 
