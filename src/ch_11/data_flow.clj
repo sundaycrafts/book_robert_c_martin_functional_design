@@ -23,7 +23,7 @@
                     "TILT"))]
             (recur state (rest lines)))))
 
-; mock for CRT display behaviour
+; emulate CRT display
 (defn render-cycles [cycles]
     (loop [cycles cycles
         screen "" ; screen buffer
@@ -35,7 +35,7 @@
         ;; e.g. (partition 3 2 (range 20))
         ;; ; => ((0 1 2) (2 3 4) (4 5 6) ...)
         ;;        ↑       ↑       ↑
-        ;; distances for each first numbers are 2 in the example.
+        ;; difference for each first numbers are 2 in the example.
         (map #(apply str %) (partition 40 40 "" screen))
         (let [x (first cycles)
             offset (- t x)
